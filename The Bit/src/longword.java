@@ -9,6 +9,14 @@ public class longword implements LongWordInterface {
 		bits = b;
 	}
 	
+	public longword(int value) {
+		for (int i = 0; i < 32; i++) {
+			bits[i] = new Bit(false);
+		}
+		set(value);
+	}
+
+
 	//empty constructor
 	public longword() {
 		//sets all bits in the list to false
