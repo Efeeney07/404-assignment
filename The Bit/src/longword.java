@@ -169,9 +169,9 @@ public class longword implements LongWordInterface {
 			int sum=0;
 			Bit[] b=new Bit[32];
 			//flips each bit in the longword
-			for(int i=0;i<32;i++) {
+			for(int i=31;i>=0;i--) {
 				b[i].set(bits[i].bitNot().getValue());
-				sum=(int) (sum+(1*Math.pow(2, i)));
+				sum=(int) (sum+(1*Math.pow(2, 32-i)));
 			}
 			System.out.println(sum);
 			return sum+1;

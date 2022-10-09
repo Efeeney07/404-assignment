@@ -1,30 +1,56 @@
-import java.util.Arrays;
+
 
 public class ALU {
 
     public static longword doOP(Bit[] op, longword a, longword b){
-        switch(Arrays.toString(op)){
-            case "[true, false, false, false]":
-                return a.and(b);
-            case "[true, false, false, true]":
-                return a.or(b);
-            case "[true, false, true, false]":
-                return a.xor(b);
-            case "[true, false, true, true]":
-                return a.not();
-            case "[true, true, false, false]":
-                return a.leftShift(b.getSigned());
-            case "[true, true, false, true]":
-                return a.rightShift(b.getSigned());
-            case "[true, true, true, false]":
-                return rippleAdder.add(a, b);
-            case "[true, true, true, true]":
-                return rippleAdder.subtract(a,b);
-            case "[false, true, true, true]":
-                return multiplier.multiply(a, b);
+        //true
+        if(op[0].getValue()){
+            //true
+            if(op[1].getValue()){
+                //true
+                if(op[2].getValue()){
+                    //true
+                    if(op[3].getValue()){
+                       return rippleAdder.add(a, b);
+                    //false
+                    }else{
+                        return rippleAdder.add(a,b);
+                    }
+                //false
+                }else{
+                    //true
+                    if(op[3].getValue()){
+                        return a.rightShift(b.getSigned());
+                    //false
+                    }else{
+                        return a.leftShift(b.getSigned());
+                    }
+                }
+            //false
+            }else{
+                //true
+                if(op[2].getValue()){
+                    //true
+                    if(op[3].getValue()){
+                        return a.not();
+                    //false
+                    }else{
+                        return a.xor(b);
+                    }
+                //false
+                }else{
+                    //true
+                    if(op[3].getValue()){
+                        return a.or(b);
+                    //false
+                    }else{
+                        return a.and(b);
+                    }
+                }
+            }
+        }else{
+            return multiplier.multiply(a, b);        
         }
-        return b;
+
     }
-
-
 }

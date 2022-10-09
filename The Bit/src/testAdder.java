@@ -1,6 +1,4 @@
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 
@@ -8,11 +6,11 @@ class testAdder {
 
 	@Test
 	void test() throws Exception {
-		testAdder();
+		testadder();
 		testSub();
 	}
 	
-	public void testAdder() throws Exception {
+	public void testadder() throws Exception {
 		
 		if(rippleAdder.add(new longword(14), new longword(325)).getSigned()!=339)throw new Exception("addiition not equal");
 		if(rippleAdder.add(new longword(325), new longword(325)).getSigned()!=650)throw new Exception("addiition not equal");
