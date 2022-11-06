@@ -18,7 +18,7 @@ class Mem_Test {
             }else{
                 System.out.print("| 0 |");
             }
-            if(i%8!=0){
+            if(i%8==0){
                 System.out.println();
             }
         }

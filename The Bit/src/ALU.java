@@ -3,53 +3,62 @@
 public class ALU {
 
     public static longword doOP(Bit[] op, longword a, longword b){
-        //true
+        //true 1000
         if(op[0].getValue()){
-            //true
+            //true 1100
             if(op[1].getValue()){
-                //true
+                //true 1110
                 if(op[2].getValue()){
-                    //true
+                    //true 1111 subtract
                     if(op[3].getValue()){
                        return rippleAdder.add(a, b);
-                    //false
+                    //false 1110 add
                     }else{
                         return rippleAdder.add(a,b);
                     }
-                //false
+                //false 1100
                 }else{
-                    //true
+                    //true 1101 rightshift
                     if(op[3].getValue()){
                         return a.rightShift(b.getSigned());
-                    //false
+                    //false 1100 leftshift
                     }else{
                         return a.leftShift(b.getSigned());
                     }
                 }
-            //false
+            //false 1000
             }else{
-                //true
+                //true 1010
                 if(op[2].getValue()){
-                    //true
+                    //true 1011 not
                     if(op[3].getValue()){
                         return a.not();
-                    //false
+                    //false 1010 xor
                     }else{
                         return a.xor(b);
                     }
-                //false
+                //false 1000
                 }else{
-                    //true
+                    //true 1001 or
                     if(op[3].getValue()){
                         return a.or(b);
-                    //false
+                    //false 1000 and
                     }else{
                         return a.and(b);
                     }
                 }
             }
+        //false 0000
         }else{
-            return multiplier.multiply(a, b);        
+            //true 0111 multiply
+            if(op[1].getValue()){
+                return multiplier.multiply(a, b); 
+            
+            //false 0000 halt
+            }else{
+                return new longword(0);
+            }
+                       
         }
 
     }
