@@ -1,4 +1,4 @@
-import org.junit.jupiter;
+import org.junit.jupiter.api.Test;
 
 class cpu_test {
 

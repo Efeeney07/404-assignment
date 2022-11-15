@@ -10,6 +10,7 @@ public class Computer{
     private longword ResultRegister=new longword();
     private longword result=new longword();
     private Bit[] opcode=new Bit[4];
+    private Bit[] branch=new Bit[2];
 
     public void run(){
         boolean loop=true;
@@ -60,10 +61,10 @@ public class Computer{
     //executes the given operation with the given addresses as parameters 
     public boolean execute(){
         //checks if the opcode is 0000, the halt operation, and returns false statement to continue loop
-        if(opcode[0]==new Bit(false)&&opcode[0]==new Bit(false)&&opcode[0]==new Bit(false)&&opcode[0]==new Bit(false)){
+        if(opcode[0]==new Bit(false)&&opcode[1]==new Bit(false)&&opcode[2]==new Bit(false)&&opcode[3]==new Bit(false)){
             return false;
         //checks if the opcode is 0010, the interupt operation
-        }else if(opcode[0]==new Bit(false)&&opcode[0]==new Bit(false)&&opcode[0]==new Bit(true)&&opcode[0]==new Bit(true)){
+        }else if(opcode[0]==new Bit(false)&&opcode[1]==new Bit(false)&&opcode[2]==new Bit(true)&&opcode[3]==new Bit(false)){
             //checks which of the interupts is prompted
             if(currentInstruction.getBit(15).getValue()){
                 //prints memory dump
@@ -75,6 +76,41 @@ public class Computer{
                 }
             }
             return true;
+            //checks if opcode is 0011, jumps to register at given address
+        }else if(opcode[0]==new Bit(false)&&opcode[1]==new Bit(false)&&opcode[2]==new Bit(true)&&opcode[3]==new Bit(true)){
+            currentInstruction=registers[result.getSigned()];
+            store();
+            return true;
+            //subtracts 2 registers
+        }else if(opcode[0]==new Bit(false)&&opcode[1]==new Bit(true)&&opcode[2]==new Bit(false)&&opcode[3]==new Bit(false)){
+            longword Rx=registers[Operator2.getSigned()];
+            longword Ry=registers[result.getSigned()];
+            Bit[] op=new Bit[4];
+            op[0]=new Bit(true);
+            op[1]=new Bit(true);
+            op[2]=new Bit(true);
+            op[3]=new Bit(true);
+            if(ALU.doOP(op,Rx,Ry).getSigned()==0){
+                branch[1]=new Bit(true);
+            }else if(ALU.doOP(op,Rx,Ry).getSigned()>0){
+                branch[0]=new Bit(true);
+            }else if(ALU.doOP(op,Rx,Ry).getSigned()<0){
+                branch[0]=new Bit(false);
+            }
+
+            return true;
+            //jumps
+        }else if(opcode[0]==new Bit(false)&&opcode[1]==new Bit(true)&&opcode[2]==new Bit(false)&&opcode[3]==new Bit(true)){
+            
+            longword branchValue=new longword();
+            Bit sign=currentInstruction.getBit(6)
+            
+            for(int i=7;i<16;i++){
+                branchValue.setBit(i,currentInstruction.getBit(i));
+            }
+            
+
+
         }else{
             //gets ALU result from opcode and registers of the ops
             result=ALU.doOP(opcode, registers[Operator1.getSigned()], registers[Operator2.getSigned()]);

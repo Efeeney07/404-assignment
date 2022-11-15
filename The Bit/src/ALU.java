@@ -11,7 +11,7 @@ public class ALU {
                 if(op[2].getValue()){
                     //true 1111 subtract
                     if(op[3].getValue()){
-                       return rippleAdder.add(a, b);
+                       return rippleAdder.subtract(b, a);
                     //false 1110 add
                     }else{
                         return rippleAdder.add(a,b);
